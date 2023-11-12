@@ -29,15 +29,17 @@ jobs:
       - name: Install pnpm
         run: npm install -g pnpm
 
-      - name: install os dependencies
+      - name: install os dependencies(linux only)
         if: matrix.os == 'ubuntu-latest'
         run: |
           sudo apt-get update
           sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libappindicator3-dev librsvg2-dev patchelf
+      - name: install os dependencies(macos only)
         if: matrix.os == 'macos-latest'
         run: |
           brew update
           brew install gtk+3 webkit2gtk librsvg pkg-config
+      - name: install os dependencies(windows only)
         if: matrix.os == 'windows-latest'
         run: |
           choco install gtk-runtime webkitgtk librsvg
