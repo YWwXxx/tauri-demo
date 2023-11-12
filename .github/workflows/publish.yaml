@@ -22,6 +22,11 @@ jobs:
         with:
           node-version: "18"
 
+      - name: Set up Rust toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+
       - name: Install pnpm
         run: npm install -g pnpm
 
