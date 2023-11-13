@@ -50,6 +50,6 @@ jobs:
 
       - name: Get Action Output
         run: |
-          output_path=${{ steps.myAction.outputs.artifactPaths }}
+          output_path='${{ steps.myAction.outputs.artifactPaths }}'
           filtered_paths=$(echo "$output_path" | jq -r '.[] | select(endswith(".sig"))')
           echo "Filtered Output Paths: $filtered_paths"
