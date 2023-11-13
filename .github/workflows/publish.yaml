@@ -53,3 +53,19 @@ jobs:
           output_path='${{ steps.myAction.outputs.artifactPaths }}'
           filtered_paths=$(echo "$output_path" | jq -r '.[] | select(endswith(".sig"))')
           echo "Filtered Output Paths: $filtered_paths"
+
+          git config user.email "actions@example.com"
+          git config user.name "GitHub Actions"
+
+          git clone https://github.com/YWwXxx/release-test.git
+
+          cd release-test
+
+          cp $filtered_paths .
+
+          git add .
+          git commit -m "Add filtered paths"
+
+          git remote set-url origin "https://${{ secrets.GITHUB_USERNAME }}:${{ secrets.GITHUB_TOKEN }}@github.com/YWwXxx/release-test.git"
+
+          git push origin main
