@@ -36,6 +36,7 @@
       "active": true,
       "dialog": true,
       "endpoints": ["https://ywwxxx.github.io/update.json"],
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDE3QkZERjZEQkNEQTI2NwpSV1Jub3MzYjl2MdBWDBDRzk4Z1BvK1hkdHJVL0J0N29sZGlSR0NIR2NaSzZVOC8yUjltZVVsNwo=%",
       "windows": {
         "installMode": "passive",
         "installerArgs": []
