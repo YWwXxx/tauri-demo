@@ -32,6 +32,7 @@ jobs:
       - name: install frontend dependencies
         run: yarn install # change this to npm or pnpm depending on which one you use
       - uses: tauri-apps/tauri-action@v0
+        id: myAction
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAURI_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
@@ -43,17 +44,6 @@ jobs:
           releaseDraft: true
           prerelease: false
 
-      - name: Generate Update File
-        run: |
-          # 获取签名文件名
-          SIGNATURE_FILE=$(find /tauri-demo2/src-tauri/target/release/bundle/macos -name '*.tar.gz.sig' -type f)
+      - name: Get Action Output
+        run: echo "Action Output: ${{ steps.myAction.outputs.artifactPaths }}"
 
-          # 复制签名文件到一个固定的文件名，例如 signature.tar.gz.sig
-          cp "$SIGNATURE_FILE" /path/to/your/update/signature.tar.gz.sig
-
-      - name: Upload to GitHub Releases
-        uses: softprops/action-gh-release@v1
-        with:
-          files: /path/to/your/update/signature.tar.gz.sig
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          release_name: Release ${{ github.sha }}
