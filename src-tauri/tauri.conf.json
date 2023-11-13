@@ -6,8 +6,8 @@
     "distDir": "../dist"
   },
   "package": {
-    "productName": "应用名002",
-    "version": "0.0.3"
+    "productName": "应用名2",
+    "version": "0.0.4"
   },
   "tauri": {
     "allowlist": {
@@ -51,7 +51,7 @@
       {
         "fullscreen": false,
         "resizable": true,
-        "title": "tauri-demo2",
+        "title": "你好",
         "width": 800,
         "height": 600
       }

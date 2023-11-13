@@ -3070,6 +3070,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "tauri-demo2"
+version = "0.0.0"
+dependencies = [
+ "serde",
+ "serde_json",
+ "tauri",
+ "tauri-build",
+]
+
+[[package]]
 name = "tauri-macros"
 version = "1.4.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -4170,14 +4180,4 @@ dependencies = [
  "byteorder",
  "crc32fast",
  "crossbeam-utils",
-]
-
-[[package]]
-name = "应用名002"
-version = "0.0.3"
-dependencies = [
- "serde",
- "serde_json",
- "tauri",
- "tauri-build",
 ]
