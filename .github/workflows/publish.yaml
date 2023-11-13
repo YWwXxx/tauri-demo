@@ -46,8 +46,8 @@ jobs:
           releaseBody: "更新测试"
           releaseDraft: true
           prerelease: false
-          artifact_paths : ${{ steps.myAction.outputs.artifactPaths }}
+          artifact_paths: ${{ steps.myAction.outputs.artifactPaths }}
 
       - name: Get Action Output
-        run: echo "Action Output: ${{ steps.myAction.outputs.artifactPaths }}"
-
+        run: |
+          echo "Action Output: ${{ steps.myAction.outputs.artifactPaths }}"
