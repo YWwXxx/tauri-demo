@@ -1,5 +1,5 @@
 {
-  "name": "tauri-demo2",
+  "name": "tauri-test",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -11,12 +11,13 @@
     "pk": "tauri build"
   },
   "dependencies": {
-    "vue": "^3.3.4",
-    "@tauri-apps/api": "^1.5.1"
+    "@tauri-apps/api": "^1.5.1",
+    "ant-design-vue": "^4.0.7",
+    "vue": "^3.3.4"
   },
   "devDependencies": {
+    "@tauri-apps/cli": "^1.5.6",
     "@vitejs/plugin-vue": "^4.2.3",
-    "vite": "^4.4.4",
-    "@tauri-apps/cli": "^1.5.6"
+    "vite": "^4.4.4"
   }
 }

@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from "vue";
 import { invoke } from "@tauri-apps/api/tauri";
+import { message } from "ant-design-vue";
 
 const greetMsg = ref("");
 const name = ref("");
@@ -8,6 +9,7 @@ const name = ref("");
 async function greet() {
   // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
   greetMsg.value = await invoke("greet", { name: name.value });
+  message.success(greetMsg.value);
 }
 </script>
 
