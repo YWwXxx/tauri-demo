@@ -6,8 +6,8 @@
     "distDir": "../dist"
   },
   "package": {
-    "productName": "应用名2",
-    "version": "0.0.4"
+    "productName": "应用名",
+    "version": "0.0.5"
   },
   "tauri": {
     "allowlist": {
