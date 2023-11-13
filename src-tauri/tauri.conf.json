@@ -6,8 +6,8 @@
     "distDir": "../dist"
   },
   "package": {
-    "productName": "应用名001",
-    "version": "0.0.2"
+    "productName": "应用名002",
+    "version": "0.0.3"
   },
   "tauri": {
     "allowlist": {
@@ -21,6 +21,11 @@
       "active": true,
       "targets": "all",
       "identifier": "com.tauri.d",
+      "windows": {
+        "wix": {
+          "language": "zh-CN"
+        }
+      },
       "icon": [
         "icons/32x32.png",
         "icons/128x128.png",
