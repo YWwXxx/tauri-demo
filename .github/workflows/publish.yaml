@@ -42,3 +42,17 @@ jobs:
           releaseBody: "更新测试"
           releaseDraft: true
           prerelease: false
+      
+      - name: Find and save signature file
+        run: |
+          SIGNATURE_FILE=$(find src-tauri/target/release/bundle/macos/ -name "*.sig")
+          echo "TAURI_SIGNATURE=$(cat $SIGNATURE_FILE)" >> $GITHUB_ENV
+
+      - name: Update update.json with signature
+        run: sed -i "s|\"signature\": null|\"signature\": \"${TAURI_SIGNATURE}\"|g" src-tauri/target/release/bundle/macos/update.json
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: app-artifacts
+          path: src-tauri/target/release/bundle/macos/
