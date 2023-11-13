@@ -42,17 +42,18 @@ jobs:
           releaseBody: "更新测试"
           releaseDraft: true
           prerelease: false
-      
-      - name: Find and save signature file
+
+      - name: Generate Update File
         run: |
-          SIGNATURE_FILE=$(find src-tauri/target/release/bundle/macos/ -name "*.sig")
-          echo "TAURI_SIGNATURE=$(cat $SIGNATURE_FILE)" >> $GITHUB_ENV
+          # 获取签名文件名
+          SIGNATURE_FILE=$(find /tauri-demo2/src-tauri/target/release/bundle/macos -name '*.tar.gz.sig' -type f)
 
-      - name: Update update.json with signature
-        run: sed -i "s|\"signature\": null|\"signature\": \"${TAURI_SIGNATURE}\"|g" src-tauri/target/release/bundle/macos/update.json
+          # 复制签名文件到一个固定的文件名，例如 signature.tar.gz.sig
+          cp "$SIGNATURE_FILE" /path/to/your/update/signature.tar.gz.sig
 
-      - name: Upload build artifacts
-        uses: actions/upload-artifact@v2
+      - name: Upload to GitHub Releases
+        uses: softprops/action-gh-release@v1
         with:
-          name: app-artifacts
-          path: src-tauri/target/release/bundle/macos/
+          files: /path/to/your/update/signature.tar.gz.sig
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          release_name: Release ${{ github.sha }}
