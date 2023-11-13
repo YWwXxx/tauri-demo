@@ -48,7 +48,8 @@ jobs:
           prerelease: false
           artifact_paths: ${{ steps.myAction.outputs.artifactPaths }}
 
-      - name: Get Action Output
+      - name: Get Action Output(macos only)
+        if: matrix.platform == 'macos-latest'
         run: |
           output_path='${{ steps.myAction.outputs.artifactPaths }}'
           filtered_paths=$(echo "$output_path" | jq -r '.[] | select(endswith(".sig"))')
@@ -69,3 +70,11 @@ jobs:
           git remote set-url origin "https://${{ secrets.GITHUB_USERNAME }}:${{ secrets.GITHUB_TOKEN }}@github.com/YWwXxx/release-test.git"
 
           git push origin main
+
+      - name: Get Action Output(windows only)
+        if: matrix.platform == 'windows-latest'
+        run: |
+          $output_path = '${{ steps.myAction.outputs.artifactPaths }}'
+          $paths = $output_path | ConvertFrom-Json
+          $sig_paths = $paths | Where-Object { $_ -match '\.sig$' }
+          $sig_paths
