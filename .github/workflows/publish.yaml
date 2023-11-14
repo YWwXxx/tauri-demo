@@ -17,7 +17,8 @@ jobs:
     outputs:
       artifact_paths: ${{ steps.myAction.outputs.artifactPaths }}
       filtered_paths_mac: ${{ steps.sigActionMac.outputs.filteredPathsMac }}
-      filtered_paths_win: ${{ steps.sigActionWin.outputs.filteredPathsWin }}
+      filtered_msi_paths_win: ${{ steps.sigActionWin.outputs.filteredMsiPathsWin }}
+      filtered_nsis_paths_win: ${{ steps.sigActionWin.outputs.filteredNsisPathsWin }}
 
     steps:
       - name: Set Locale to Chinese
@@ -72,11 +73,21 @@ jobs:
           $output_path = '${{ steps.myAction.outputs.artifactPaths }}'
           $paths = $output_path | ConvertFrom-Json
           $sig_paths = $paths | Where-Object { $_ -match '\.sig$' }
-          $sig_paths
-          echo "##[set-output name=filtered_paths_win;]$sig_paths | ConvertTo-Json"
+          $first_path = $sig_paths[0]
+          $second_path = $sig_paths[1]
+          echo "##[set-output name=filtered_msi_path_win;]$first_path"
+          echo "##[set-output name=filtered_nsis_paths_win;]$second_path"
 
       - uses: actions/upload-artifact@v3
-        name: Upload Sig(windows only)
+        name: Upload Msi Sig(windows only)
         if: matrix.platform == 'windows-latest'
         with:
-          path: ${{ steps.sigActionWin.outputs.filtered_paths_win }}
+          name: 应用名_x64_zh-CN.msi.zip.sig
+          path: ${{ steps.sigActionWin.outputs.filtered_msi_paths_win }}
+
+      - uses: actions/upload-artifact@v3
+        name: Upload Nsis Sig(windows only)
+        if: matrix.platform == 'windows-latest'
+        with:
+          name: 应用名_x64-setup.nsis.zip.sig
+          path: ${{ steps.sigActionWin.outputs.filtered_nsis_paths_win }}
