@@ -57,14 +57,16 @@ jobs:
           output_path='${{ steps.myAction.outputs.artifactPaths }}'
           filtered_paths_mac=$(echo "$output_path" | jq -r '.[] | select(endswith(".sig"))')
           echo "Filtered Output Paths: $filtered_paths_mac"
-          echo "::set-output name=filtered_paths_mac::${filtered_paths_mac}"
+          echo "filtered_paths_mac=${filtered_paths_mac}" >> "&GITHUB_OUTPUT"
 
       - uses: actions/upload-artifact@v3
         name: Upload Sig(macos only)
+        env:
+          FILTERED_PATHS_MAC: ${{ steps.sigActionMac.outputs.filtered_paths_mac }}
         if: matrix.platform == 'macos-latest'
         with:
           name: 应用名.app.tar.gz.sig
-          path: ${{ steps.sigActionMac.outputs.filtered_paths_mac }}
+          path: $FILTERED_PATHS_MAC
 
       - name: Get Action Output(windows only)
         id: sigActionWin
@@ -75,6 +77,8 @@ jobs:
           $sig_paths = $paths | Where-Object { $_ -match '\.sig$' }
           $first_path = $sig_paths[0]
           $second_path = $sig_paths[1]
+          $sig_paths[0]
+          $sig_paths[1]
           echo "##[set-output name=filtered_msi_path_win;]$first_path"
           echo "##[set-output name=filtered_nsis_paths_win;]$second_path"
 
