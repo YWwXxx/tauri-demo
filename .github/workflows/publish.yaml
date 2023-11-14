@@ -58,8 +58,8 @@ jobs:
           echo "Filtered Output Paths: $filtered_paths"
           echo "::set-output name=filtered_paths::${filtered_paths}"
 
-      - name: Commit and Push Changes
       - uses: actions/checkout@v2
+      - name: Commit and Push Changes
         if: matrix.platform == 'macos-latest'
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
