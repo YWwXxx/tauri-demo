@@ -58,29 +58,10 @@ jobs:
           echo "Filtered Output Paths: $filtered_paths"
           echo "::set-output name=filtered_paths::${filtered_paths}"
 
-      - uses: actions/checkout@v2
-      - name: Commit and Push Changes
-        if: matrix.platform == 'macos-latest'
+      - uses: actions/upload-artifact@v3
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          git config user.email "actions@example.com"
-          git config user.name "GitHub Actions"
-
-          git clone https://github.com/YWwXxx/release-test.git
-
-          cd release-test
-
-          filtered_paths="${{ needs.sigAction.outputs.filtered_paths }}"
-
-          cp $filtered_paths .
-
-          git add .
-          git commit -m "Add filtered paths"
-
-          git remote set-url origin https://github.com/YWwXxx/release-test.git
-
-          git push -u origin main
+          name: my-artifact
+          path: ${{ steps.sigAction.outputs.filtered_paths }}
 
       - name: Get Action Output(windows only)
         if: matrix.platform == 'windows-latest'
