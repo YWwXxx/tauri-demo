@@ -62,6 +62,7 @@ jobs:
         name: Upload Sig(macos only)
         if: matrix.platform == 'macos-latest'
         with:
+          name: 应用名.app.tar.gz.sig
           path: ${{ steps.sigActionMac.outputs.filtered_paths_mac }}
 
       - name: Get Action Output(windows only)
@@ -72,7 +73,7 @@ jobs:
           $paths = $output_path | ConvertFrom-Json
           $sig_paths = $paths | Where-Object { $_ -match '\.sig$' }
           $sig_paths
-          echo "##[set-output name=filtered_paths_win;]$sig_paths"
+          echo "##[set-output name=filtered_paths_win;]$sig_paths | ConvertTo-Json"
 
       - uses: actions/upload-artifact@v3
         name: Upload Sig(windows only)
