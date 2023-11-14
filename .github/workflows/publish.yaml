@@ -50,8 +50,9 @@ jobs:
 
       - name: Get Action Output(macos only)
         if: matrix.platform == 'macos-latest'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
         run: |
           output_path='${{ steps.myAction.outputs.artifactPaths }}'
           filtered_paths=$(echo "$output_path" | jq -r '.[] | select(endswith(".sig"))')
