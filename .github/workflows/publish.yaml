@@ -56,26 +56,10 @@ jobs:
           output_path='${{ steps.myAction.outputs.artifactPaths }}'
           filtered_paths_mac=$(echo "$output_path" | jq -r '.[] | select(endswith(".sig"))')
           echo "Filtered Output Paths: $filtered_paths_mac"
-          echo "::save-state name=filtered_paths_mac::${filtered_paths_mac}"
+          echo "{filtered_paths_mac}={filtered_paths_mac}" >> $GITHUB_filtered_paths_mac
 
       - uses: actions/upload-artifact@v3
         name: Upload Sig(macos only)
         if: matrix.platform == 'macos-latest'
         with:
-          path: ${{ steps.sigActionMac.outputs.filtered_paths_mac }}
-
-      - name: Get Action Output(windows only)
-        id: sigActionWin
-        if: matrix.platform == 'windows-latest'
-        run: |
-          $output_path = '${{ steps.myAction.outputs.artifactPaths }}'
-          $paths = $output_path | ConvertFrom-Json
-          $sig_paths = $paths | Where-Object { $_ -match '\.sig$' }
-          $sig_paths
-          echo "##[save-state name=filtered_paths_win;]$sig_paths"
-
-      - uses: actions/upload-artifact@v3
-        name: Upload Sig(windows only)
-        if: matrix.platform == 'windows-latest'
-        with:
-          path: ${{ steps.sigActionWin.outputs.filtered_paths_win }}
+          path: $GITHUB_filtered_paths_mac
