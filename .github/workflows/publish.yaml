@@ -50,7 +50,6 @@ jobs:
 
       - name: Get Action Output(macos only)
         if: matrix.platform == 'macos-latest'
-        uses: actions/checkout@v2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
         run: |
