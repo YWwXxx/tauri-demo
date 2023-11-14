@@ -47,7 +47,6 @@ jobs:
           releaseBody: "更新测试"
           releaseDraft: true
           prerelease: false
-          artifact_paths: ${{ steps.myAction.outputs.artifactPaths }}
 
       - name: Get Action Output(macos only)
         id: sigAction
@@ -59,6 +58,7 @@ jobs:
           echo "::set-output name=filtered_paths::${filtered_paths}"
 
       - uses: actions/upload-artifact@v3
+        if: matrix.platform == 'macos-latest'
         with:
           name: my-artifact
           path: ${{ steps.sigAction.outputs.filtered_paths }}
